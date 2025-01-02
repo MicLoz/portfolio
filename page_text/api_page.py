@@ -133,17 +133,30 @@ def api_page_two():
             fostering early detection and resolution of issues.
             """)
     st.header("User Story Section 1: User Story Statement and Detailed Description")
-    st.write("""
-        As a user, I want to retrieve product details via an API so that I can view and analyse product information.
-        """)
-    if st.button("Analysis"):
+
+    if st.toggle("Show Analysis"):
         st.markdown(
             """
-            <span style="color: rgb(255,75,75);">This follows the common: \"As a [user], I want to [goal], so that '
-            [benefit]\" format and succinctly states the feature from the user\'s perspective.</span>
-            """,
-            unsafe_allow_html=True
+            <span style="color: rgb(255,75,75);">This statement follows the standard format: 
+            "As a [user], I want to [goal], so that [benefit]." 
+            <br>However, it lacks clarity on the type of user 
+            (e.g., developer, end-user), which affects development and testing. 
+            <br>The term "view" is vague—it's likely intended for the UI, but this should be confirmed. 
+            <br>Additionally, "analyse product information" needs specifics on what this entails 
+            and how the feature will be used. 
+            <br>I'll compile these questions for discussion with the Product Owner and the Team. 
+            <br>After reviewing, the user story will be updated to ensure it accurately reflects the requirements.</span>                  
+            """
+            ,unsafe_allow_html=True
         )
+        st.markdown("""
+            <b>As a user, I want to retrieve product details via an API so that I can view and analyse product information.</b>
+            """
+            ,unsafe_allow_html=True)
+    else:
+        st.write("""
+                    As a user, I want to retrieve product details via an API so that I can view and analyse product information.
+                    """)
     st.write("""
         \nDescription:
         The system will provide an API endpoint: 
