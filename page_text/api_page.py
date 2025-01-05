@@ -16,7 +16,6 @@ def api_render_pages(current_page, max_page):
 
     #Display page nav buttons
     api_page_nav_buttons(current_page, max_page)
-    st.write(f"Page is Read: {page_is_read}")
 
     if st.session_state.page_nav_button_clicked:
         # Scroll tha page to top if not yet read, or bottom if already read (Only following nav. button press)
