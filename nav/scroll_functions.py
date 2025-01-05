@@ -1,10 +1,13 @@
 import pyautogui as auto
 import platform
+import time
 
 # Get operating system name
 os_name = platform.system()
 
 def scroll_page(page_is_read):
+    # Wait for the page to load
+    time.sleep(.1)
     if page_is_read == False:
         scroll_to_top()
     elif page_is_read == True:

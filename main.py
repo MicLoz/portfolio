@@ -8,7 +8,7 @@ from page_text.api_page import api_render_pages
 if "api_current_project_page" not in st.session_state:
     st.session_state.api_current_project_page = 1  # Default to the first page of the project
 if "api_page_is_read" not in st.session_state:
-    st.session_state.api_page_is_read = [False,False] # Stores if pages have been read by the user or not.
+    st.session_state.api_page_is_read = [False,False,False] # Stores if pages have been read by the user or not.
 if "page_nav_button_clicked" not in st.session_state:
     st.session_state.page_nav_button_clicked = False # Denotes if Next or Previous buttons were clicked, prior to page reload
 
@@ -36,7 +36,7 @@ if option == "Home":
 
 elif option == "Automated API Testing Tool":
     #Set maximum no. of pages and retrieve current page for this Project
-    max_page = 2
+    max_page = 3
     current_page = st.session_state.api_current_project_page
 
     # Check current page and display content as appropriate
