@@ -13,6 +13,12 @@ def api_render_pages(current_page, max_page):
         api_page_two()
     elif current_page == 3:
         api_page_three()
+    elif current_page == 4:
+        api_page_four()
+    elif current_page == 5:
+        api_page_five()
+    elif current_page == 6:
+        api_page_six()
 
     #Display page nav buttons
     api_page_nav_buttons(current_page, max_page)
@@ -25,7 +31,7 @@ def api_render_pages(current_page, max_page):
 
 def api_page_one():
     #st.query_params.set_item("scroll", "top")
-    st.header("Automated API Testing Tool")
+    st.header("Static Testing a User Story")
     st.subheader("User Story")
     st.subheader("Retrieve and Display Product Information")
     st.write("""
@@ -82,24 +88,7 @@ def api_page_one():
         <ul>
             <li>The API should respond within 2 seconds under normal load conditions.</li>
         </ul>
-    </div>         
-    Security:
-    <div style="padding-left: 20px;">
-        <ul>
-            <li>Ensure CORS (Cross-Origin Resource Sharing) policies are in place to prevent unauthorized access.</li>
-            <li>API requests must only be allowed over HTTPS.</li>
-        </ul>
-    </div>       
-    What fields returned should be:
-    id (integer): A unique identifier for the product.
-    title (string): The name of the product.
-    price (float): The price of the product.
-    description (string): A brief description of the product.
-    category (string): The product's category.
-    image (string): A URL to the product's image.
-    rating (object): Contains:
-    rate (float): The average rating.
-    count (integer): The number of ratings.
+    </div>          
     """, unsafe_allow_html=True)
     st.subheader("My Testing Approach:")
     st.write("""The first thing I would do is perform static testing on the User Story.
@@ -190,13 +179,12 @@ def api_page_two():
                 <br>It's worth noting that this part of the user story states:
                 <br>"This data can be consumed by client applications to display product information or analyse product details."
                 <br>So our earlier assumption that this API will be used to display product information to an end user is correct,
-                so we need not query this with the PO and team. 
+                we need not query this with the PO and team. 
                 <br>The question around exactly what "analyse product details" entails
                 still stands, for example if the user needs the data to be returned in a certain format as part of their analysis
-                it will greatly help direct the development and testing approach we use for this piece of work.
+                this information will help direct the development and testing approach we use for this piece of work.
             </span>          
-            """
-            ,unsafe_allow_html=True
+            """, unsafe_allow_html=True
         )
         st.markdown("""<b>
             <br>Description:
@@ -252,3 +240,339 @@ def api_page_two():
 
 def api_page_three():
     st.header("Static Testing the User Story")
+    st.write("<b>Acceptance Criteria:</b>", unsafe_allow_html=True)
+    if st.toggle("Show Analysis", key="api_suc_resp"):
+        st.markdown("""
+            <span style="color: rgb(255,75,75);">
+                This acceptance criteria gives us a good understanding of how the feature should function.
+                But the queries raised in earlier analysis still stand.
+            </span>
+            """, unsafe_allow_html=True)
+        st.write("""
+            \n<b>Successful Response:</b>
+            <div style="padding-left: 20px;">
+                <ul>
+                    <b>
+                        <li>When a GET request is sent to /products, the API should return a 200 OK status.</li>
+                        <li>The response body should contain a JSON array of products.</li>
+                        <li>Each product should return the fields defined in the above description.</li>
+                    </b>
+                </ul>
+            </div>
+            """
+            ,unsafe_allow_html=True)
+    else:
+        st.write("""
+            \nSuccessful Response:
+            <div style="padding-left: 20px;">
+                <ul>
+                    <li>When a GET request is sent to /products, the API should return a 200 OK status.</li>
+                    <li>The response body should contain a JSON array of products.</li>
+                    <li>Each product should return the fields defined in the above description.</li>
+                </ul>
+            </div>
+            """
+            ,unsafe_allow_html=True)
+    if st.toggle("Show Analysis", key="api_err_hand"):
+        st.markdown("""
+            <span style="color: rgb(255,75,75);">
+                This gives us more detail on the types of error expected for 405 and 500 error codes.
+                <br>It is still worth asking: "Should the error responses include details such as timestamps or request IDs?"
+                <br>As this may make the delivered solution more user friendly and improve it's overall quality.
+                <br>
+            </span>
+            """, unsafe_allow_html=True)
+        st.write("""
+        <b>Error Handling:</b>
+        <div style="padding-left: 20px;">
+            <ul>
+                 <b>
+                    <li>If the API is accessed with an invalid HTTP method (e.g., POST), it should return a 405 Method Not Allowed status.</li>
+                    <li>If the API encounters an internal server error, it should return a 500 Internal Server Error status.</li>
+                 </b>
+            </ul>
+        </div>""",unsafe_allow_html=True)
+    else:
+        st.write("""
+        Error Handling:
+        <div style="padding-left: 20px;">
+            <ul>
+                <li>If the API is accessed with an invalid HTTP method (e.g., POST), it should return a 405 Method Not Allowed status.</li>
+                <li>If the API encounters an internal server error, it should return a 500 Internal Server Error status.</li>
+            </ul>
+        </div>""",unsafe_allow_html=True)
+    if st.toggle("Show Analysis", key="api_valid"):
+        st.markdown("""
+            <span style="color: rgb(255,75,75);">
+                    This section on validation mentions that all fields in the response need to match their expected data types,
+                    but as we identified in earlier analysis, most of the fields do not have their data types specified.
+                    <br>It's good that we identified this earlier and will be querying this with the PO and team.
+                    <br>
+                    <br>Moving on, we can validate a valid URL for the image field, but our queries around knowing if the actual image is the correct one for each given product
+                    and what behaviour is expected if no image is present are still valid.
+                    <br>The info. about the ratings fields, reiterates the data types, and gives some more detail, but the specific's of how
+                    and what we will actually be validating these values against still needs defining.
+                <br>
+            </span>
+            """, unsafe_allow_html=True)
+        st.write("""
+            <b>Validation:</b>
+            <div style="padding-left: 20px;">
+                <ul>
+                    <b>
+                        <li>All fields in the response should match their expected data types.</li>
+                        <li>The image field must contain a valid URL.</li>
+                        <li>The rating.rate should be a float between 0.0 and 5.0.</li>
+                        <li>The rating.count should be a non-negative integer.</li>
+                    </b>
+                </ul>
+            </div>""", unsafe_allow_html=True)
+    else:
+        st.write("""
+            Validation:
+            <div style="padding-left: 20px;">
+                <ul>
+                    <li>All fields in the response should match their expected data types.</li>
+                    <li>The image field must contain a valid URL.</li>
+                    <li>The rating.rate should be a float between 0.0 and 5.0.</li>
+                    <li>The rating.count should be a non-negative integer.</li>
+                </ul>
+            </div>                
+            """
+            ,unsafe_allow_html=True)
+    if st.toggle("Show Analysis", key="api_perf"):
+        st.markdown("""
+            <span style="color: rgb(255,75,75);">
+                    This section on validation mentions that all fields in the response need to match their expected data types,
+                    but as we identified in earlier analysis, most of the fields do not have their data types specified.
+                    <br>It's good that we identified this earlier and will be querying this with the PO and team.
+                    <br>
+                    <br>Moving on, we can validate a valid URL for the image field, but our queries around knowing if the actual image is the correct one for each given product
+                    and what behaviour is expected if no image is present are still valid.
+                    <br>The info. about the ratings fields, reiterates the data types, and gives some more detail, but the specific's of how
+                    and what we will actually be validating these values against still needs defining.
+                <br>
+            </span>
+            """, unsafe_allow_html=True)
+        st.write("""
+                <b>Performance:</b>
+                <div style="padding-left: 20px;">
+                    <ul>
+                        <b>
+                            <li>The API should respond within 2 seconds under normal load conditions.</li>
+                        </b>
+                    </ul>
+                </div>
+                """
+                ,unsafe_allow_html=True)
+    else:
+        st.write("""
+                Performance:
+                <div style="padding-left: 20px;">
+                    <ul>
+                        <li>The API should respond within 2 seconds under normal load conditions.</li>
+                    </ul>
+                </div>
+                """
+                ,unsafe_allow_html=True)
+
+def api_page_four():
+    st.header("Static Testing the User Story")
+    st.subheader("The Product Owner's Response:")
+    st.markdown("""
+    > Thank you for the detailed analysis. Here are my clarifications and responses to your queries: <br><br>
+
+    <ul>
+        <li>The term "user" in the original story refers to <strong>developers building client applications</strong> that consume this API.</li>
+        <li>The "view and analyze product information" means displaying the data in a UI and providing options for developers to manipulate 
+        or export it for deeper analysis, such as generating reports.
+        </li>
+    </ul>
+
+    <strong>Specific responses:</strong><br>
+
+    <ul>
+        <li><strong>Product ID</strong>: Alphanumeric, max length 50 characters.</li>
+        <li><strong>Title</strong>: Mandatory, max 255 characters.</li>
+        <li><strong>Description</strong>: Optional, no character limit but ideally under 1,000 characters for performance.</li>
+        <li><strong>Category</strong>: Mandatory, limited to predefined values (e.g., Electronics, Home).</li>
+        <li><strong>Image URL</strong>: Validate that it is a proper URL; use a placeholder for invalid or missing images.</li>
+        <li><strong>Rating fields</strong>: 
+            <ul>
+                <li><code>rate</code> should default to <code>null</code> if no ratings exist.</li>
+                <li><code>count</code> defaults to <code>0</code>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    <ul>
+        <li>For error messages, include timestamps, a unique request ID, and error details in JSON format for both 405 and 500 errors.</li>
+        <li>If the product list is empty, return a 200 status with an empty array.</li>
+        <li>Regarding "analyse product details," no specific format is required for analysis tools, but ensure data is consistently structured 
+        and accurate.
+        </li>
+    </ul>
+    The Product owner also arranges to give me access to the database, as well as providing a list of images and to which Product's they belong.
+    """, unsafe_allow_html=True)
+
+def api_page_five():
+    st.header("Static Testing the User Story")
+    st.subheader("The Rewritten user Story")
+    st.write("Following the Product Owner's responses the user story is rewritten to accurately reflect the solution that needs to be built"
+             "and the testing that needs to be done.")
+    st.markdown("""
+    > **User Story Statement:**<br>  
+    As a developer building client applications, I want to retrieve product details via an API so that I can display and analyze product information in the UI and support further data manipulation or reporting.  
+
+    **Detailed Description:**<br>  
+    The system will provide an API endpoint: <code>/products</code> that returns a list of products. Each product will include the following details:  
+
+    <ul>
+        <li><strong>Product ID</strong>: Alphanumeric, max length 50 characters.</li>
+        <li><strong>Title</strong>: Mandatory, max 255 characters.</li>
+        <li><strong>Price</strong>: Decimal value representing the product's price.</li>
+        <li><strong>Description</strong>: Optional, no character limit but ideally under 1,000 characters for performance.</li>
+        <li><strong>Category</strong>: Mandatory, limited to predefined values (e.g., Electronics, Home).</li>
+        <li><strong>Image URL</strong>: Must be a valid URL. If invalid or missing, return a placeholder image.</li>
+        <li><strong>Rating Information:</strong>  
+            <ul>
+                <li><code>rate</code> (float): The average rating. Defaults to <code>null</code> if no ratings exist.</li>
+                <li><code>count</code> (integer): The number of ratings. Defaults to <code>0</code>.</li>
+            </ul>
+        </li>
+    </ul>
+
+    This data will be consumed by client applications for UI display or for additional analysis by developers.<br><br>
+
+    **Acceptance Criteria:**<br>  
+
+    <ul>
+        <li>When a GET request is sent to <code>/products</code>, the API should return a <code>200 OK</code> status.</li>
+        <li>The response body should contain a JSON array of products with the fields defined above.</li>
+        <li>If the product list is empty, the response should include a <code>200 OK</code> status with an empty array.</li>
+        <li>If an invalid HTTP method (e.g., POST) is used, return a <code>405 Method Not Allowed</code> status with error details (timestamp, request ID, message).</li>
+        <li>If an internal server error occurs, return a <code>500 Internal Server Error</code> status with error details (timestamp, request ID, message).</li>
+    </ul>
+
+    **Validation:**<br>  
+
+    <ul>
+        <li>All fields in the response should match their expected data types.</li>
+        <li>The <code>image</code> field must contain a valid URL.</li>
+        <li>The <code>rating.rate</code> should be a float between <code>0.0</code> and <code>5.0</code>.</li>
+        <li>The <code>rating.count</code> should be a non-negative integer.</li>
+    </ul>
+
+    **Performance:**<br>  
+    <ul>
+        <li>The API should respond within 2 seconds under normal load conditions.</li>
+    </ul>
+    """,unsafe_allow_html=True)
+
+def api_page_six():
+    st.header("Static Testing the User Story")
+    st.subheader("Writing Tests")
+    st.write("""Now we have a User Story that is accurate. We have all the information we need, we can write clear and concise tests.
+             In addition to the summarised test's below. I would investigate the database to identify the main tables involved in the
+             Product and Rating process and write queries to accurately calculate the ratings for the Products I expect to be returned.
+             This would give me expected values to validate the rating values against.""")
+    st.markdown("""
+    ### Functional Test Cases
+    <ul>
+        <li><strong>Verify successful response with products:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - API returns `200 OK`.<br>
+            - Response contains a JSON array of products with all fields (Product ID, Title, Price, Description, Category, Image URL, Rating Information).
+        </li>
+        <li><strong>Verify response when product list is empty:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` when no products exist.<br>
+            <strong>Expected Result:</strong><br>
+            - API returns `200 OK`.<br>
+            - Response contains an empty array (`[]`).
+        </li>
+        <li><strong>Verify required fields are returned:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - All mandatory fields (Product ID, Title, Price, Category) are present and not null.
+        </li>
+        <li><strong>Verify optional fields behavior:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` with some products missing `Description` or `Image URL`.<br>
+            <strong>Expected Result:</strong><br>
+            - Missing `Description` is either empty or null.<br>
+            - Missing or invalid `Image URL` is replaced by a placeholder.
+        </li>
+        <li><strong>Verify rating information defaults:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` with products having no ratings.<br>
+            <strong>Expected Result:</strong><br>
+            - `rating.rate` defaults to `null`.<br>
+            - `rating.count` defaults to `0`.
+        </li>
+        <li><strong>Verify handling of invalid HTTP methods:</strong><br>
+            <strong>Input:</strong> Send a `POST` request to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - API returns `405 Method Not Allowed`.<br>
+            - Error message includes timestamp, request ID, and error description.
+        </li>
+        <li><strong>Verify handling of internal server errors:</strong><br>
+            <strong>Input:</strong> Simulate a server-side error during a `GET` request to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - API returns `500 Internal Server Error`.<br>
+            - Error message includes timestamp, request ID, and error description.
+        </li>
+        <li><strong>Verify valid product data types:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - Product ID is alphanumeric.<br>
+            - Title is a string with a max length of 255 characters.<br>
+            - Price is a decimal.<br>
+            - Rating information has `rate` as a float between `0.0` and `5.0` and `count` as a non-negative integer.
+        </li>
+    </ul>
+
+    ### Performance Test Cases
+    <ul>
+        <li><strong>Verify response time under normal load:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` under normal load conditions.<br>
+            <strong>Expected Result:</strong><br>
+            - API responds within 2 seconds.
+        </li>
+        <li><strong>Verify response time under heavy load:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` under heavy load conditions (e.g., high concurrent users).<br>
+            <strong>Expected Result:</strong><br>
+            - API responds within acceptable performance thresholds.
+        </li>
+    </ul>
+
+    ### Validation Test Cases
+    <ul>
+        <li><strong>Verify valid image URLs:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` with products having valid and invalid image URLs.<br>
+            <strong>Expected Result:</strong><br>
+            - Valid URLs return images successfully.<br>
+            - Invalid URLs return a placeholder.
+        </li>
+        <li><strong>Verify field validation:</strong><br>
+            <strong>Input:</strong> Send a valid `GET` request to `/products` and verify the response data types.<br>
+            <strong>Expected Result:</strong><br>
+            - All fields match their specified data types.
+        </li>
+    </ul>
+
+    ### Negative Test Cases
+    <ul>
+        <li><strong>Verify invalid product IDs:</strong><br>
+            <strong>Input:</strong> Test with products containing invalid Product IDs (e.g., too long, non-alphanumeric).<br>
+            <strong>Expected Result:</strong><br>
+            - API rejects invalid data and logs errors (if applicable).
+        </li>
+        <li><strong>Verify malformed requests:</strong><br>
+            <strong>Input:</strong> Send malformed or incomplete requests to `/products`.<br>
+            <strong>Expected Result:</strong><br>
+            - API returns appropriate error responses (`400 Bad Request` or similar).
+        </li>
+    </ul>
+    """, unsafe_allow_html=True)
+
+
+
