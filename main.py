@@ -1,23 +1,14 @@
 import streamlit as st
 import base64
 from colour_picker import colour_picker_section, return_custom_styling
-from api_validation import display_api_streamlit_elements
 from page_text.home_page import home_page_text
 from page_text.api_page import api_render_pages
-
-# Initialize session state variables for api project page navigation
-if "api_current_project_page" not in st.session_state:
-    st.session_state.api_current_project_page = 1  # Default to the first page of the project
-if "api_page_is_read" not in st.session_state:
-    st.session_state.api_page_is_read = [False,False,False,False,False,False] # Stores if pages have been read by the user or not.
-if "page_nav_button_clicked" not in st.session_state:
-    st.session_state.page_nav_button_clicked = False # Denotes if Next or Previous buttons were clicked, prior to page reload
 
 #Titles and Sidebar config.
 st.title("Michael Lozynsky : Portfolio")
 st.sidebar.title("Navigation")
 option = st.sidebar.selectbox("Select a Project", ["Home",
-                                                   "Static Testing a User Story",
+                                                   "Manual Testing - Page 01",
                                                    "Auto Tests in Typescript"
                                                    ])
 st.sidebar.title("Customisation")
@@ -30,14 +21,10 @@ st.markdown(custom_style, unsafe_allow_html=True)
 if option == "Home":
     home_page_text()
 
-elif option == "Static Testing a User Story":
-    #Set maximum no. of pages and retrieve current page for this Project
-    max_page = 6
-    current_page = st.session_state.api_current_project_page
-
-    # Check current page and display content as appropriate
-    api_render_pages(current_page, max_page)
-
+elif option == "Manual Testing - Page 01":
+    page_to_render = 1
+    # Pass in relevant page number to display text.
+    api_render_pages(page_to_render)
     #display_api_streamlit_elements() # Commented out for now, this shows the API testing tool.
 
 elif option == "Auto Tests in Typescript":

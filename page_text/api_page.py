@@ -1,39 +1,14 @@
 import streamlit as st
-from nav.page_buttons import api_page_nav_buttons
-from nav.scroll_functions import scroll_page
 
-def api_render_pages(current_page, max_page):
-    #Has the page been read or not (index adjusted)
-    page_is_read = st.session_state.api_page_is_read[current_page - 1]
-
-    # Check current page and display content as appropriate
-    if current_page == 1:
+def api_render_pages(page_to_render):
+    if page_to_render == 1:
         api_page_one()
-    elif current_page == 2:
-        api_page_two()
-    elif current_page == 3:
-        api_page_three()
-    elif current_page == 4:
-        api_page_four()
-    elif current_page == 5:
-        api_page_five()
-    elif current_page == 6:
-        api_page_six()
-
-    #Display page nav buttons
-    api_page_nav_buttons(current_page, max_page)
-
-    if st.session_state.page_nav_button_clicked:
-        # Scroll tha page to top if not yet read, or bottom if already read (Only following nav. button press)
-        scroll_page(page_is_read)
-        # Reset page_nav_button_clicked to False
-        st.session_state.page_nav_button_clicked = False
 
 def api_page_one():
     #st.query_params.set_item("scroll", "top")
-    st.header("Static Testing a User Story")
-    st.subheader("User Story")
-    st.subheader("Retrieve and Display Product Information")
+    st.header("Manual Testing - Page 01")
+    st.subheader("Subheader1")
+    st.subheader("Subheader2")
     st.write("""
 
     As a user, I want to retrieve product details via an API so that I can view and analyse product information.
